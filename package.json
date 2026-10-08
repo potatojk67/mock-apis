@@ -1,0 +1,12 @@
+{
+  "name": "raralabs-mock-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mock API server for RaraLabs. Each JSON file in /routes is one endpoint.",
+  "scripts": {
+    "dev": "node dev.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

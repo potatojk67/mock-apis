@@ -1,0 +1,31 @@
+{
+  "_note": "Template only. Real routes go in mock-apis/routes/<name>.json. Files starting with _ are ignored.",
+  "name": "Get Invoice",
+  "description": "Return one customer invoice so another system can show or check it.",
+  "method": "GET",
+  "path": "/api/v1/invoices/:invoice_number",
+  "request": {
+    "required_fields": [],
+    "example": "GET /api/v1/invoices/INV-2026-00123"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "invoice_number": "{{params.invoice_number}}",
+      "customer_name": "Himalayan Traders Pvt. Ltd.",
+      "invoice_date": "2026-09-30",
+      "currency": "NPR",
+      "lines": [
+        { "description": "Consulting services - September", "amount": 100000.00, "vat": 13000.00 }
+      ],
+      "total": 113000.00,
+      "status": "unpaid"
+    }
+  },
+  "examples": [
+    {
+      "when": { "params": { "invoice_number": "INV-0000" } },
+      "response": { "status": 404, "body": { "error": "Invoice not found" } }
+    }
+  ]
+}

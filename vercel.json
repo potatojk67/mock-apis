@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "routes/**"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index?__path=/$1" }
+  ]
+}
