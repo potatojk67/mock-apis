@@ -40,19 +40,32 @@ function lookup(obj, dottedKey) {
   return dottedKey.split('.').reduce((v, k) => (v == null ? undefined : v[k]), obj);
 }
 
-// Replace {{params.x}}, {{query.x}}, {{body.x}} placeholders inside the response.
+// {{random.int(1000,1000000)}} -> a whole number between min and max (both included).
+const RANDOM_INT = /\{\{\s*random\.int\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)\s*\}\}/;
+
+function randomInt(min, max) {
+  const lo = Math.min(min, max);
+  const hi = Math.max(min, max);
+  return lo + Math.floor(Math.random() * (hi - lo + 1));
+}
+
+// Replace {{params.x}}, {{query.x}}, {{body.x}} and {{random.int(min,max)}} placeholders inside the response.
 function fillTemplate(value, ctx) {
   if (Array.isArray(value)) return value.map((v) => fillTemplate(v, ctx));
   if (value && typeof value === 'object') {
     return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, fillTemplate(v, ctx)]));
   }
   if (typeof value !== 'string') return value;
+  const wholeRandom = value.match(new RegExp(`^${RANDOM_INT.source}$`));
+  if (wholeRandom) return randomInt(Number(wholeRandom[1]), Number(wholeRandom[2])); // keep it a number
   const whole = value.match(/^\{\{\s*(params|query|body)\.([\w.]+)\s*\}\}$/);
   if (whole) return lookup(ctx[whole[1]], whole[2]); // keep numbers as numbers
-  return value.replace(/\{\{\s*(params|query|body)\.([\w.]+)\s*\}\}/g, (_, src, key) => {
-    const v = lookup(ctx[src], key);
-    return v == null ? '' : String(v);
-  });
+  return value
+    .replace(new RegExp(RANDOM_INT.source, 'g'), (_, min, max) => String(randomInt(Number(min), Number(max))))
+    .replace(/\{\{\s*(params|query|body)\.([\w.]+)\s*\}\}/g, (_, src, key) => {
+      const v = lookup(ctx[src], key);
+      return v == null ? '' : String(v);
+    });
 }
 
 // An example matches when every value in its "when" block equals the incoming request.

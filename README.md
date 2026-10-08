@@ -16,6 +16,7 @@ A pretend API. It gives back fake but realistic answers, so other people and sys
 | `response` | The normal reply: `status` (200 = OK) and `body` |
 | `examples` | Special replies for specific inputs, e.g. invoice `INV-0000` → 404 "not found" |
 | `{{params.x}}` / `{{query.x}}` / `{{body.x}}` | Copies a value from the request into the reply |
+| `{{random.int(1000,1000000)}}` | A new random whole number in that range on every call |
 
 ## Deploy to Vercel
 Option A (easiest, needs Node.js installed from nodejs.org):

@@ -1,0 +1,17 @@
+{
+  "name": "Account Random Number",
+  "description": "Takes an account number and returns a random number between 1,000 and 1,000,000.",
+  "method": "POST",
+  "path": "/api/v1/accounts/random-number",
+  "request": {
+    "required_fields": ["account_number"],
+    "example": { "account_number": "1001-0045" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "account_number": "{{body.account_number}}",
+      "random_number": "{{random.int(1000,1000000)}}"
+    }
+  }
+}
