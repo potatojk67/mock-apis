@@ -1,0 +1,22 @@
+{
+  "name": "Send Email Notification",
+  "description": "Sends an email to the customer. The notification service looks up the customer's email address from customer_id.",
+  "method": "POST",
+  "path": "/api/v1/notifications/email",
+  "request": {
+    "required_fields": ["customer_id", "message"],
+    "example": {
+      "customer_id": "CUST-10045",
+      "message": "Your payday loan PDL-2026-000123 has been settled."
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "SENT",
+      "channel": "EMAIL",
+      "customer_id": "{{body.customer_id}}",
+      "message_id": "EML-{{random.int(100000,999999)}}"
+    }
+  }
+}

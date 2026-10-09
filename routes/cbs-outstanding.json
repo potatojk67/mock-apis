@@ -1,0 +1,39 @@
+{
+  "name": "CBS Loan Outstanding",
+  "description": "Core banking (CBS) returns the customer's current payday loan outstanding. Used by Sumo processes check_outstanding, payday_disbursement and payday_settlement.",
+  "method": "POST",
+  "path": "/api/v1/cbs/outstanding",
+  "request": {
+    "required_fields": ["customer_id"],
+    "example": { "customer_id": "CUST-10045", "loan_id": "PDL-2026-000123" }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "customer_id": "{{body.customer_id}}",
+      "loan_id": "{{body.loan_id}}",
+      "outstanding": "{{random.int(5000,80000)}}.00",
+      "currency": "NPR",
+      "as_of": "2026-10-09"
+    }
+  },
+  "examples": [
+    {
+      "when": { "body": { "customer_id": "CUST-NIL" } },
+      "response": {
+        "status": 200,
+        "body": {
+          "customer_id": "{{body.customer_id}}",
+          "loan_id": "{{body.loan_id}}",
+          "outstanding": "0.00",
+          "currency": "NPR",
+          "as_of": "2026-10-09"
+        }
+      }
+    },
+    {
+      "when": { "body": { "customer_id": "CUST-UNKNOWN" } },
+      "response": { "status": 404, "body": { "error": "Customer not found in CBS" } }
+    }
+  ]
+}

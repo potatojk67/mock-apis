@@ -1,0 +1,22 @@
+{
+  "name": "Send SMS Notification",
+  "description": "Sends an SMS to the customer. The notification service looks up the customer's mobile number from customer_id.",
+  "method": "POST",
+  "path": "/api/v1/notifications/sms",
+  "request": {
+    "required_fields": ["customer_id", "message"],
+    "example": {
+      "customer_id": "CUST-10045",
+      "message": "Your payday loan PDL-2026-000123 has been settled."
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "SENT",
+      "channel": "SMS",
+      "customer_id": "{{body.customer_id}}",
+      "message_id": "SMS-{{random.int(100000,999999)}}"
+    }
+  }
+}
