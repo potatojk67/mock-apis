@@ -1,0 +1,71 @@
+{
+  "name": "Account Balance",
+  "description": "Mock API for testing the Sumo Ledger balance_check_api workflow stage. Takes an account number and returns the account balance.",
+  "method": "POST",
+  "path": "/api/v1/balance",
+  "request": {
+    "required_fields": [
+      "account_id"
+    ]
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "balance": 25000
+    }
+  },
+  "examples": [
+    {
+      "when": {
+        "body": {
+          "account_id": "00201010000410"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "balance": 500
+        }
+      }
+    },
+    {
+      "when": {
+        "body": {
+          "account_id": "00201010000420"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "balance": 0
+        }
+      }
+    },
+    {
+      "when": {
+        "body": {
+          "account_id": "00201010000430"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "balance": 1000
+        }
+      }
+    },
+    {
+      "when": {
+        "body": {
+          "account_id": "00201010000440"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "balance": 999
+        }
+      }
+    }
+  ]
+}
