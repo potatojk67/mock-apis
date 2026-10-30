@@ -1,0 +1,35 @@
+{
+  "name": "Blacklist Check",
+  "description": "Mock API for testing the Sumo Ledger blacklist_check workflow stage",
+  "method": "POST",
+  "path": "/api/v1/blacklist",
+  "request": {
+    "required_fields": [
+      "dob",
+      "full_name",
+      "citizenship_no",
+      "account_number"
+    ]
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "blacklisted": "NO"
+    }
+  },
+  "examples": [
+    {
+      "when": {
+        "body": {
+          "citizenship_no": "BLACKLISTED_TEST"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "blacklisted": "YES"
+        }
+      }
+    }
+  ]
+}
